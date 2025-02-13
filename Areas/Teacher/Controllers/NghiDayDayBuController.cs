@@ -17,10 +17,12 @@ namespace QLDaoTao.Areas.Teacher.Controllers
     {
         private readonly IPhieuDangKyNghiDayDayBu _phieuDangKyNghiDayDayBu;
         private readonly UserManager<AppUser> _userManager;
-        public NghiDayDayBuController(IPhieuDangKyNghiDayDayBu phieuDangKyNghiDayDayBu, UserManager<AppUser> userManager)
+        private readonly PhieuDangKyQueue _queue;
+        public NghiDayDayBuController(IPhieuDangKyNghiDayDayBu phieuDangKyNghiDayDayBu, UserManager<AppUser> userManager, PhieuDangKyQueue queue)
         {
             _userManager = userManager;
             _phieuDangKyNghiDayDayBu = phieuDangKyNghiDayDayBu;
+            _queue = queue;
         }
 
         [Route("Teacher/NghiDayDayBu/Create")]
@@ -88,15 +90,9 @@ namespace QLDaoTao.Areas.Teacher.Controllers
                     phieuDangKy.LopHocPhanNghiDayDayBuVM.Add(lhp);
                 }
 
-                var result = await _phieuDangKyNghiDayDayBu.Create(phieuDangKy);
+                _queue.Enqueue(phieuDangKy);
 
-                if (!result)
-                {
-                    TempData["error"] = "Gửi thất bại !";
-                    return View(model);
-                }
-
-                TempData["success"] = "Gửi thành công !";
+                TempData["success"] = "Phiếu đăng ký đã được nhận và đang chờ xử lý !";
                 return View();
             }
             else

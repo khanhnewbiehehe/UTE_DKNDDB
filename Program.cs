@@ -6,6 +6,9 @@ using System.Security;
 using QLDaoTao.Areas.Admin.Services;
 using DinkToPdf.Contracts;
 using DinkToPdf;
+using QLDaoTao.Areas.Teacher.Models;
+using Quartz;
+using QLDaoTao.Areas.Teacher.Jobs;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -40,6 +43,23 @@ builder.Services.AddIdentity<AppUser, IdentityRole>(
 
 builder.Services.AddSingleton<IConverter, SynchronizedConverter>(provider =>
     new SynchronizedConverter(new PdfTools()));
+
+builder.Services.AddSingleton<PhieuDangKyQueue>(); // Đăng ký hàng đợi
+
+// Cấu hình Quartz
+builder.Services.AddQuartz(q =>
+{
+    var jobKey = new JobKey("ProcessPhieuDangKyJob");
+    q.AddJob<ProcessPhieuDangKyJob>(opts => opts.WithIdentity(jobKey));
+
+    q.AddTrigger(opts => opts
+        .ForJob(jobKey)
+        .WithIdentity("ProcessPhieuDangKy-trigger")
+        .WithSimpleSchedule(schedule => schedule
+            .WithIntervalInSeconds(3) // Chạy mỗi 3 giây
+            .RepeatForever()));
+});
+builder.Services.AddQuartzHostedService(q => q.WaitForJobsToComplete = true);
 
 // Cấu hình đăng nhập cho Student
 //builder.Services.AddIdentity<AppStudent, IdentityRole>(
