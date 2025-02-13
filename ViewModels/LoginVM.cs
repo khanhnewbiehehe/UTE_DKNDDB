@@ -4,8 +4,8 @@ namespace QLDaoTao.ViewModels;
 
 public class LoginVM
 {
-    [Required(ErrorMessage = "Email là bắt buộc.")]
-    public string? Email { get; set; }
+    [Required(ErrorMessage = "Tên đăng nhập là bắt buộc.")]
+    public string? Username { get; set; }
 
     [Required(ErrorMessage = "Mật khẩu là bắt buộc.")]
     [DataType(DataType.Password)]

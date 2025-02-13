@@ -4,6 +4,8 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System.Security;
 using QLDaoTao.Areas.Admin.Services;
+using DinkToPdf.Contracts;
+using DinkToPdf;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,6 +14,10 @@ builder.Services.AddRazorPages().AddRazorRuntimeCompilation();
 builder.Services.AddSession();
 builder.Services.AddControllersWithViews();
 builder.Services.AddScoped<IStudent, ItemStudentService>();
+builder.Services.AddScoped<IPhieuDangKyNghiDayDayBu, ItemPhieuDangKyNghiDayDayBuService>();
+builder.Services.AddScoped<IPDF, ItemPDFService>();
+builder.Services.AddScoped<ILopHocPhan, ItemLopHocPhanService>();
+builder.Services.AddScoped<IKhoa, ItemKhoaService>();
 
 builder.Services.AddDbContext<AppDbContext>(
     options => options.UseSqlServer(connectionString));
@@ -31,6 +37,9 @@ builder.Services.AddIdentity<AppUser, IdentityRole>(
    .AddEntityFrameworkStores<AppDbContext>()
    .AddDefaultTokenProviders()
    .AddDefaultUI();
+
+builder.Services.AddSingleton<IConverter, SynchronizedConverter>(provider =>
+    new SynchronizedConverter(new PdfTools()));
 
 // Cấu hình đăng nhập cho Student
 //builder.Services.AddIdentity<AppStudent, IdentityRole>(

@@ -26,7 +26,7 @@ public class AccountController(SignInManager<AppUser> signInManager, UserManager
             else
             {
                 if (user.Role == "Teacher")
-                    return RedirectToAction("GiangVien", "Home");
+                    return RedirectToAction("Index", "Home", new { area = "Teacher" });
                 else if (user.Role == "Student")
                     return RedirectToAction("SinhVien", "Home");
                 else
@@ -43,14 +43,14 @@ public class AccountController(SignInManager<AppUser> signInManager, UserManager
     {
         if (ModelState.IsValid)
         {
-            var email = model.Email.Trim().ToUpperInvariant();
-            var user = await userManager.FindByEmailAsync(email);
+            var username = model.Username.Trim().ToUpperInvariant();
+            var user = await userManager.FindByNameAsync(username);
             if (user != null)
             {
                 if (user.Status == 1)
                 {
                     //login
-                    var result = await signInManager.PasswordSignInAsync(email!, model.Password!, model.RememberMe, false);
+                    var result = await signInManager.PasswordSignInAsync(username!, model.Password!, model.RememberMe, false);
 
                     if (result.Succeeded)
                     {
@@ -61,8 +61,8 @@ public class AccountController(SignInManager<AppUser> signInManager, UserManager
                         }
                         else
                         {
-                            if (user.Role == "Teacher")
-                                return RedirectToAction("GiangVien", "Home");
+                            if (roles.Contains("Teacher"))
+                                return RedirectToAction("Index", "Home", new { area = "Teacher" });
                             else if (user.Role == "Student")
                                 return RedirectToAction("SinhVien", "Home");
                             else
@@ -102,8 +102,8 @@ public class AccountController(SignInManager<AppUser> signInManager, UserManager
             AppUser user = new AppUser();
             user.FirstName = model.FirstName;
             user.LastName = model.LastName;
-            user.Name = model.LastName.Trim()+' '+model.FirstName;
-            user.UserName = model.Email.Trim();
+            user.Name = model.LastName.Trim() + ' ' + model.FirstName;
+            user.UserName = model.UserCode.Trim();
             user.Email = model.Email.Trim();
             user.NormalizedEmail = model.Email.Trim().ToUpperInvariant();
             user.Password = model.Password;
@@ -155,7 +155,7 @@ public class AccountController(SignInManager<AppUser> signInManager, UserManager
             else
             {
                 if (user.Role == "Teacher")
-                    return RedirectToAction("GiangVien", "Home");
+                    return RedirectToAction("Index", "Home", new { area = "Teacher" });
                 else if (user.Role == "Student")
                     return RedirectToAction("SinhVien", "Home");
                 else
@@ -171,14 +171,14 @@ public class AccountController(SignInManager<AppUser> signInManager, UserManager
     {
         if (ModelState.IsValid)
         {
-            var email = model.Email.Trim();
-            var user = await userManager.FindByEmailAsync(email);
+            var username = model.Username.Trim();
+            var user = await userManager.FindByNameAsync(username);
             if (user != null)
             {
                 if (user.Status == 1)
                 {
                     //login
-                    var result = await signInManager.PasswordSignInAsync(email!, model.Password!, model.RememberMe, false);
+                    var result = await signInManager.PasswordSignInAsync(username!, model.Password!, model.RememberMe, false);
 
                     if (result.Succeeded)
                     {
@@ -190,7 +190,7 @@ public class AccountController(SignInManager<AppUser> signInManager, UserManager
                         else
                         {
                             if (user.Role == "Teacher")
-                                return RedirectToAction("GiangVien", "Home");
+                                return RedirectToAction("Index", "Home", new { area = "Teacher" });
                             else if (user.Role == "Student")
                                 return RedirectToAction("SinhVien", "Home");
                             else

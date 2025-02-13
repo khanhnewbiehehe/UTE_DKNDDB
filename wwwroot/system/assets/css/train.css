@@ -20440,3 +20440,20 @@ form#admin-login .main-error {
 form label {
     color:#000000;
 }
+.swal2-icon.swal2-warning {
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    color: #f8bb86;
+    border-color: #facea8;
+    font-size: 25px !important;
+    line-height: 80px;
+    text-align: center;
+}
+
+.swal2-icon.swal2-question {
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    color: #87adbd;
+    border-color: #c9dae1;
+    font-size: 25px !important;
+    line-height: 80px;
+    text-align: center;
+}

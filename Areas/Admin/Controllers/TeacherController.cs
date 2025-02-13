@@ -251,6 +251,7 @@ namespace QLDaoTao.Areas.Admin.Controllers
             }
         }
 
+
         [HttpDelete]
         [Route("/admin/teacher/delete/{id}")]
         public async Task<ActionResult> Delete(String id)
@@ -271,7 +272,6 @@ namespace QLDaoTao.Areas.Admin.Controllers
 
             return Json(new { success = true, message = "Xóa thành công!" });
         }
-
 
         // POST: TeacherController/Delete/5
         [HttpPost]

@@ -10,6 +10,7 @@ public class RegisterVM
     [Required]
     [DataType(DataType.Password)]
     public string? Password { get; set; }
+    public string? UserCode { get; set; }
 
     [Required (ErrorMessage ="FirstName is required")]
     public string? FirstName { get; set; }

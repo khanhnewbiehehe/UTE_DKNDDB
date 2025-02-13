@@ -779,6 +779,226 @@ namespace QLDaoTao.Migrations
                     b.ToTable("AspNetUsers", (string)null);
                 });
 
+            modelBuilder.Entity("QLDaoTao.Models.BanSaoVBCTDiKem", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("DuongDan")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("IdPhieuDangKyDayBu")
+                        .HasColumnType("int");
+
+                    b.Property<string>("MoTa")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("IdPhieuDangKyDayBu");
+
+                    b.ToTable("BanSaoVBCTDiKem");
+                });
+
+            modelBuilder.Entity("QLDaoTao.Models.BoMon", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("IdKhoa")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Ten")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("IdKhoa");
+
+                    b.ToTable("BoMon");
+                });
+
+            modelBuilder.Entity("QLDaoTao.Models.GiangVien", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("HoTen")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("IdBoMon")
+                        .HasColumnType("int");
+
+                    b.Property<int>("MaGV")
+                        .HasColumnType("int");
+
+                    b.Property<string>("SDT")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("IdBoMon");
+
+                    b.ToTable("GiangVien");
+                });
+
+            modelBuilder.Entity("QLDaoTao.Models.HocPhan", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Ten")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("HocPhan");
+                });
+
+            modelBuilder.Entity("QLDaoTao.Models.Khoa", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Ten")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Khoa");
+                });
+
+            modelBuilder.Entity("QLDaoTao.Models.LopHocPhan", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("DenTiet")
+                        .HasColumnType("int");
+
+                    b.Property<int>("IdGiangVien")
+                        .HasColumnType("int");
+
+                    b.Property<string>("IdHocPhan")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Phong")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Thu")
+                        .HasColumnType("int");
+
+                    b.Property<int>("TuTiet")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("IdGiangVien");
+
+                    b.HasIndex("IdHocPhan");
+
+                    b.ToTable("LopHocPhan");
+                });
+
+            modelBuilder.Entity("QLDaoTao.Models.LopHocPhanPhieuDangKyDayBu", b =>
+                {
+                    b.Property<string>("IdLopHocPhan")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("IdPhieuDangKyDayBu")
+                        .HasColumnType("int");
+
+                    b.Property<int>("DenTiet")
+                        .HasColumnType("int");
+
+                    b.Property<string>("LyDo")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("NgayDayBu")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("NgayXinNghi")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Phong")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Thu")
+                        .HasColumnType("int");
+
+                    b.Property<int>("TuTiet")
+                        .HasColumnType("int");
+
+                    b.HasKey("IdLopHocPhan", "IdPhieuDangKyDayBu");
+
+                    b.HasIndex("IdPhieuDangKyDayBu");
+
+                    b.ToTable("LopHocPhanPhieuDangKyDayBu");
+                });
+
+            modelBuilder.Entity("QLDaoTao.Models.PhieuDangKyDayBu", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("CreatedBy")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("DeletedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("DeletedBy")
+                        .HasColumnType("int");
+
+                    b.Property<string>("LyDo")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("SoBuoiXinNghi")
+                        .HasColumnType("int");
+
+                    b.Property<int>("TrangThai")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("UpdatedBy")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("PhieuDangKyDayBu");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -828,6 +1048,87 @@ namespace QLDaoTao.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("QLDaoTao.Models.BanSaoVBCTDiKem", b =>
+                {
+                    b.HasOne("QLDaoTao.Models.PhieuDangKyDayBu", "PhieuDangKyDayBu")
+                        .WithMany()
+                        .HasForeignKey("IdPhieuDangKyDayBu")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("PhieuDangKyDayBu");
+                });
+
+            modelBuilder.Entity("QLDaoTao.Models.BoMon", b =>
+                {
+                    b.HasOne("QLDaoTao.Models.Khoa", "Khoa")
+                        .WithMany()
+                        .HasForeignKey("IdKhoa")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Khoa");
+                });
+
+            modelBuilder.Entity("QLDaoTao.Models.GiangVien", b =>
+                {
+                    b.HasOne("QLDaoTao.Models.BoMon", "BoMon")
+                        .WithMany()
+                        .HasForeignKey("IdBoMon")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("BoMon");
+                });
+
+            modelBuilder.Entity("QLDaoTao.Models.LopHocPhan", b =>
+                {
+                    b.HasOne("QLDaoTao.Models.GiangVien", "GiangVien")
+                        .WithMany()
+                        .HasForeignKey("IdGiangVien")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("QLDaoTao.Models.HocPhan", "HocPhan")
+                        .WithMany()
+                        .HasForeignKey("IdHocPhan")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("GiangVien");
+
+                    b.Navigation("HocPhan");
+                });
+
+            modelBuilder.Entity("QLDaoTao.Models.LopHocPhanPhieuDangKyDayBu", b =>
+                {
+                    b.HasOne("QLDaoTao.Models.LopHocPhan", "LopHocPhan")
+                        .WithMany("LopHocPhanPhieuDangKyDayBu")
+                        .HasForeignKey("IdLopHocPhan")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("QLDaoTao.Models.PhieuDangKyDayBu", "PhieuDangKyDayBu")
+                        .WithMany("LopHocPhanPhieuDangKyDayBu")
+                        .HasForeignKey("IdPhieuDangKyDayBu")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("LopHocPhan");
+
+                    b.Navigation("PhieuDangKyDayBu");
+                });
+
+            modelBuilder.Entity("QLDaoTao.Models.LopHocPhan", b =>
+                {
+                    b.Navigation("LopHocPhanPhieuDangKyDayBu");
+                });
+
+            modelBuilder.Entity("QLDaoTao.Models.PhieuDangKyDayBu", b =>
+                {
+                    b.Navigation("LopHocPhanPhieuDangKyDayBu");
                 });
 #pragma warning restore 612, 618
         }
